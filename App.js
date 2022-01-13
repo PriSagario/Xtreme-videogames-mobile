@@ -1,20 +1,18 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import AuthenticateRoutes from './src/Navegation/AuthenticateRoutes';
+// import UnauthenticateRoutes from './src/Navegation/UnauthenticatedRoutes';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunk  from 'redux-thunk';
+import mainReducer from './src/Redux/Reducers/mainReducer';
+
+const reduxStore = createStore(mainReducer, applyMiddleware(thunk))
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={reduxStore}>
+       <AuthenticateRoutes />
+    </Provider>
+      //  <UnauthenticateRoutes />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
