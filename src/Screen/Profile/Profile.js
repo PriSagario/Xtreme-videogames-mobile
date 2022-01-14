@@ -17,20 +17,20 @@ const Profile = () => {
                     <Text style={styles.textTitle}>Welcome to Extreme</Text>
                     <Text style={styles.textSubtitle}>Logged-in users can do more! sign-in now</Text>
                     <View style={styles.viewBtn}>
-                    <Button
-                        title="Sign In"
-                        containerStyle={styles.btnSign}
-                        buttonStyle={{ backgroundColor: "#11EDD5" }}
-                        onPress={() => navigation.navigate("signin")}
-                        titleStyle={{ fontSize: 22 }}
-                    />
-                    <Button
-                        title="New account"
-                        containerStyle={styles.btnAccount}
-                        buttonStyle={{ backgroundColor: "#2B2E39" }}
-                        onPress={() => navigation.navigate("signup")}
-                        titleStyle={{ fontSize: 22 }}
-                    />          
+                        <Button
+                            title="Sign In"
+                            containerStyle={styles.btnSign}
+                            buttonStyle={{ backgroundColor: "#11EDD5" }}
+                            onPress={() => navigation.navigate("signin")}
+                            titleStyle={{ fontSize: 22 }}
+                        />
+                        <Button
+                            title="New account"
+                            containerStyle={styles.btnAccount}
+                            buttonStyle={{ backgroundColor: "#2B2E39" }}
+                            onPress={() => navigation.navigate("signup")}
+                            titleStyle={{ fontSize: 22 }}
+                        />          
                     </View>
                 </View>
                 <View style={styles.infoUser}>
@@ -82,21 +82,19 @@ const styles = StyleSheet.create({
         marginLeft: width/20,
     },
     viewBtn: {
-        width:width-140,
-        // height: height-22,
+        width:width,
         flex:1,
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginTop: height/8,
-        marginBottom: height/15.5,
+        justifyContent: 'space-around',
+        alignItems: 'center'
+    },
+    btnSign: {
+        width: width/2.5,
     },
     btnAccount: {
         borderStyle: 'solid',
         borderWidth: 1,
-        borderColor: '#2DF2B8'
+        borderColor: '#2DF2B8',
+        // height: height/18
     },
-    btnSign: {
-        width: width/3,
-        paddingRight: 10,
-    }
 })

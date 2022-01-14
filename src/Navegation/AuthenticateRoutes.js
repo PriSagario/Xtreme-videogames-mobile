@@ -20,6 +20,7 @@ const TabBar = () => {
         tabBarIcon: ({ color }) => mostrarIcono(route, color),
         tabBarInactiveTintColor: "#fff",
         tabBarActiveTintColor: "#2FC4B8",
+        tabBarHideOnKeyboard: true,
         tabBarStyle: {
           // borderTopLeftRadius: 30,
           // borderTopRightRadius: 30,

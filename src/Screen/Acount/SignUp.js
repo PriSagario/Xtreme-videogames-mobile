@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#141028",
-        height: height/1.2
+        height: height/1.1
       },
       imglogo: {
         width: width/5,

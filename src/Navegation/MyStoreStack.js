@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MyStore from "../Screen/MyStore/MyStore";
 import AddProduct from "../Screen/Store/AddProduct";
 import EditProduct from '../Screen/MyStore/EditProduct';
+import SearchGame from '../Components/SearchGame';
 
 const Stack = createNativeStackNavigator()
 
@@ -12,14 +13,14 @@ export default function MyStoreStack() {
       screenOptions={{
         headerStyle: { backgroundColor: "#2E2B39" },
         headerTintColor: "#fff",
-        headerShown: false
+        headerShown: true
       }}
     >
       <Stack.Screen
         component={MyStore}
         name="mystore"
         options={{
-          title: "Mi Tienda",
+          title: "Market place",
         }}
       />
       <Stack.Screen
@@ -38,6 +39,13 @@ export default function MyStoreStack() {
           title: "Editar Producto",
         }}
       />
+      <Stack.Screen
+        component={SearchGame}
+        name="search"
+        options={{
+          title: "Browse games",
+        }}
+      />    
     </Stack.Navigator>
   );
 }

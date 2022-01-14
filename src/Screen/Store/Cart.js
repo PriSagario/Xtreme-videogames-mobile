@@ -1,18 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, Text, View, ScrollView, Dimensions, Image } from 'react-native'
 import { Button, Icon } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
+import CardCart from '../../Components/CardCart';
+import NoCart from '../../Components/NoCart';
 const { width, height } = Dimensions.get('screen')
 
 const Cart = () => {
-    const navigation = useNavigation(); 
+    const navigation = useNavigation();
+    const [control, setControl]= useState(false) 
     return (
-        <ScrollView>
             <View style={styles.container}>
-                <View style={styles.logedUser}>
-                    <Icon type="material-community" name={'emoticon-sad-outline'} size={64} color={'#2CF4B8'} />
-                    <Text style={styles.textTitle}>Your cart is empty</Text>
-                    <Text style={styles.textSubtitle}>Browse and buy products on Extreme</Text>
+                <View style={styles.logedUser}>{
+                    control ?
+                    <NoCart />
+                    : <ScrollView>
+                       <View style={styles.viewContent}><CardCart /></View> 
+                       <View style={styles.viewContent}><CardCart /></View> 
+                       <View style={styles.viewContent}><CardCart /></View> 
+                       <View style={styles.viewContent}><CardCart /></View> 
+                       <View style={styles.viewContent}><CardCart /></View> 
+                      </ScrollView> 
+                }
                 </View>
                 <View style={styles.infoUser}>
                     <View style={styles.viewBtn}>
@@ -31,7 +40,6 @@ const Cart = () => {
 
                 </View>            
             </View>
-        </ScrollView>
     )
 }
 
@@ -44,11 +52,11 @@ const styles = StyleSheet.create({
     },
     logedUser: {
         flex: 1,
-        // justifyContent: 'center',
+        justifyContent: 'center',
         alignItems: 'center',
         height: height/2,
         backgroundColor: '#2B2E39',
-        paddingTop: height/4,
+        paddingTop: height/12,
 
     },
     infoUser: {
@@ -61,16 +69,6 @@ const styles = StyleSheet.create({
         marginTop: height/33,
         alignSelf: "center",
       },
-    textTitle: {
-        fontSize: 25,
-        color: '#fff',
-        marginTop: height/30
-    },
-    textSubtitle: {
-        fontSize: 18,
-        color: '#2CF4B8',
-        marginTop: height/40
-    },
     textAccount: {
         fontSize: 18,
         color: '#2CF4B8',
@@ -98,7 +96,7 @@ const styles = StyleSheet.create({
         fontSize: 35,
         color: '#fff'
     },
-    viewTotal: {
-
+    viewContent: {
+        marginBottom: height/105
     }    
 })
