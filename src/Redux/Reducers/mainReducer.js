@@ -1,12 +1,11 @@
 import { combineReducers } from 'redux'
-// import cityReducer from './cityReducer'
-// import itineraryReducer from './itineraryReducer'
 import authReducer from './authReducer';
+import gameReducer from './gameReducer';
 
 const mainReducer = combineReducers ({
-    // cityReducer,
-    // itineraryReducer,
-    authReducer
+ 
+    authReducer,
+    gameReducer
 
     
 })

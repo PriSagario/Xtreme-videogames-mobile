@@ -1,49 +1,61 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, ScrollView, Dimensions, SafeAreaView, TouchableOpacity } from 'react-native'
 import HorizontalList from '../../Components/HorizontalList'
 import { Icon } from "react-native-elements"
 import { useNavigation } from "@react-navigation/native";
+import HorizontalGames from '../../Components/HorizontalGames';
+import { connect } from 'react-redux'
+import gameActions from '../../Redux/Actions/gameActions';
 
-const { width, height } = Dimensions.get('screen')
-const data = ['Action', 'Adventure', 'RPG', 'Shooter', 'Indie', 'Casual', 'Sports', 'Racing', 'Massively Multiplayer']
-const MyStore = () => {
-    const navigation = useNavigation(); 
+ const { width, height } = Dimensions.get('screen')
+ const data = [ "Action", "Adventure", "RPG", "Shooter", "Indie", "Casual", "Sports", "Racing","Puzzle", "Platformer", "Simulation", "Strategy", "Massively Multiplayer"]
+ const MyStore = ({getGames }) => {
+    const navigation = useNavigation();
+    const [allGames, setAllgames] = useState([]) 
+
+    useEffect(() => {
+        getGames()
+        .then((res) => {
+          setAllgames(res.response.res);
+        })
+        .catch((err) => console.log(err));
+    }, [])
+
     const handlePress = () => {
         navigation.navigate("search")
     } 
     return (
         <ScrollView>
             <View style={styles.container}>
-    
-                {/* <Text style={styles.textTitle}>Browse games</Text> */}
-                    <TouchableOpacity
-                        onPress={() => handlePress()}
-                    >
-                <View style={styles.viewSearch}>
-                    <View style={styles.search}>
-                       <Icon type="material-community" name={'magnify'} size={34} color={'#2CF4B8'} />
-                      <Text  style={styles.textSearch}>Search</Text> 
+                <TouchableOpacity
+                    onPress={() => handlePress()}
+                >
+                    <View style={styles.viewSearch}>
+                        <View style={styles.search}>
+                        <Icon type="material-community" name={'magnify'} size={34} color={'#2CF4B8'} />
+                        <Text  style={styles.textSearch}></Text> 
+                        </View>
                     </View>
-
-                </View>
-                    </TouchableOpacity>
-            
-                    <HorizontalList 
-                        style={styles.horizontalList}
-                        data={ data }
-                    />
-            </View>
+                </TouchableOpacity>
+                <HorizontalList data={ data }/>
+                <Text style={styles.textTop}>Top games</Text>
+                {allGames &&
+                    allGames.map((item, i) => <HorizontalGames key={i} item={ item }/>)
+                }
+             </View>
         </ScrollView>
     )
 }
+const mapDispatchToProps = {
+    getGames: gameActions.getAllGames, 
+  }
 
-export default MyStore
+export default connect(null, mapDispatchToProps)(MyStore)
 
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#20222B',
-        height: height,
-        paddingTop: height/30
+        paddingTop: height/30,
     },
     text: {
         color: '#fff'
@@ -65,7 +77,7 @@ const styles = StyleSheet.create({
         marginBottom: height/60
     },
     viewSearch: {
-        width: width/1.1,
+       width: width/1.1,
        height: height/18,
        marginLeft: width/19,
        backgroundColor: '#343744',
@@ -74,12 +86,17 @@ const styles = StyleSheet.create({
     textSearch: {
         fontSize: 24,
         color: '#2CF4B8',
-        // marginRight: 10
     },
     search: {
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center'
-    }
+    },
+    textTop: {
+        fontSize: 20,
+        color: '#fff',
+        marginTop: height/35,
+        marginLeft: width/10
+     },
 })
 

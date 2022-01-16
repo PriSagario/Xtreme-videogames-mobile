@@ -4,6 +4,7 @@ import MyStore from "../Screen/MyStore/MyStore";
 import AddProduct from "../Screen/Store/AddProduct";
 import EditProduct from '../Screen/MyStore/EditProduct';
 import SearchGame from '../Components/SearchGame';
+import gamesByGenre from "../Components/gamesByGenre";
 
 const Stack = createNativeStackNavigator()
 
@@ -13,7 +14,7 @@ export default function MyStoreStack() {
       screenOptions={{
         headerStyle: { backgroundColor: "#2E2B39" },
         headerTintColor: "#fff",
-        headerShown: true
+        headerShown: true,
       }}
     >
       <Stack.Screen
@@ -44,6 +45,13 @@ export default function MyStoreStack() {
         name="search"
         options={{
           title: "Browse games",
+        }}
+      />    
+      <Stack.Screen
+        component={gamesByGenre}
+        name="games-genre"
+        options={{
+          title: "Genders",
         }}
       />    
     </Stack.Navigator>

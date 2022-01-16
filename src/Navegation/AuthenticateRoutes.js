@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -74,23 +74,25 @@ function mostrarIcono(route, color) {
 }
 
 export default function AuthenticateRoutes() {
+  const [user, setUser]= useState(true)
   return (
     <NavigationContainer>
-        <TabBar />
-      {/* <Drawer.Navigator
-        drawerContent={(props) => <CustomDrawerContent {...props} />}
-      >
-        <Drawer.Screen
-          name="Store"
-          component={TabBar}
-          options={{
-            title: "Store",
-            drawerIcon: () => {
-              <Icon type="material-community" name="store" size={24} />;
-            },
-          }}
-        />
-      </Drawer.Navigator> */}
+        {user ? <TabBar /> : 
+          <Drawer.Navigator
+            drawerContent={(props) => <CustomDrawerContent {...props} />}
+          >
+            <Drawer.Screen
+              name="Store"
+              component={TabBar}
+              options={{
+                title: "Admin",
+                drawerIcon: () => {
+                  // <Icon type="material-community" name="store" size={24} />;
+                },
+              }}
+            />
+          </Drawer.Navigator>
+        }
     </NavigationContainer>
   );
 }

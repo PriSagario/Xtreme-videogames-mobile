@@ -156,7 +156,7 @@ const SignInForm = (props) => {
               />
             </TouchableOpacity>
           </View>
-          <Loading isVisible={loading} text="Favor Espere" />
+          <Loading isVisible={loading} text="Please wait" />
         </View>
     )
 }

@@ -10,20 +10,20 @@ const CustomDrawerContent = (props) => {
             <View style={styles.drawerContent}>
               <View style={styles.userInfoSection}>
                 <View style={{ flexDirection: "row", marginTop: 15 }}>
-                <DrawerItem
-              icon={({ color, size }) => (
-                <Icon
-                  name="store"
-                  color={color}
-                  size={size}
-                  type="material-community"
-                />
-              )}
-              label="Mi Tienda"
-              onPress={() => {
-                props.navigation.navigate("singin");
-              }}
-            />
+                    <DrawerItem
+                      icon={({ color, size }) => (
+                        <Icon
+                          name="store"
+                          color={color}
+                          size={size}
+                          type="material-community"
+                        />
+                      )}
+                      label="Mi Tienda"
+                      onPress={() => {
+                        props.navigation.navigate("singin");
+                      }}
+                  />
                 </View>
               </View>
             </View>

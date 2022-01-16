@@ -1,10 +1,28 @@
-import React from 'react'
-import { StyleSheet, Text, View, FlatList, Dimensions } from 'react-native'
-import { Icon } from 'react-native-elements';
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, View, FlatList, Dimensions, TouchableOpacity } from 'react-native'
+import { Icon } from 'react-native-elements'
+import { useNavigation } from "@react-navigation/native"
+import { connect } from 'react-redux'
+import gameActions from '../Redux/Actions/gameActions';
+import Loading from "../Components/Loading";
+
 
 const { width, height } = Dimensions.get('window')
 
-const HorizontalList = ({ data }) => {
+const HorizontalList = ({ data, getGenre }) => {
+    const [loading, setloading] = useState(false);
+    const navigation = useNavigation();
+   
+    const handlePress = (item) => {
+        setloading(true)
+        getGenre(item)
+        .then((res) => {
+            navigation.navigate("games-genre", { item: res.response.data.res, name: item })
+            setloading(false)
+          })
+          .catch((err) => console.log(err));          
+    }
+    
     return <FlatList 
                 data={data}
                 keyExtractor={(item) => String(item)}
@@ -14,24 +32,31 @@ const HorizontalList = ({ data }) => {
                     backgroundColor:item,
                     height: width/2.16,
                     width: width/2.5,
-                    // alignItems: 'center'
                 }}>
                     <View style={styles.card}>
-                        
-                        <Text style={styles.itemText}>{item}</Text>
+                       <TouchableOpacity
+                         onPress={() => handlePress(item)}
+                       >
+                           <Text style={styles.itemText}>{ item }</Text>
+                       </TouchableOpacity> 
                     </View>
+                    <Loading isVisible={loading} text="Please wait" />
                 </View>}
             />
 }
+const mapDispatchToProps = {
+    getGenre: gameActions.getGameByGenre, 
+  }
 
-export default HorizontalList
+export default connect(null, mapDispatchToProps)(HorizontalList)
+// export default HorizontalList
 
 const styles = StyleSheet.create({
     card: {
         backgroundColor: '#343744',
         marginTop: 37,
         marginRight:5,
-        marginBottom: 7,
+        // marginBottom: 7,
         marginLeft: 7,
         height: width/7.4,
         justifyContent: 'center',
