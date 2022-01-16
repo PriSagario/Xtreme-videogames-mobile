@@ -5,6 +5,7 @@ import AddProduct from "../Screen/Store/AddProduct";
 import EditProduct from '../Screen/MyStore/EditProduct';
 import SearchGame from '../Components/SearchGame';
 import gamesByGenre from "../Components/gamesByGenre";
+import gameDetail from '../Components/gameDetail';
 
 const Stack = createNativeStackNavigator()
 
@@ -54,6 +55,13 @@ export default function MyStoreStack() {
           title: "Genders",
         }}
       />    
+      <Stack.Screen
+        component={gameDetail}
+        name="game-detail"
+        options={{
+          title: "Game detail",
+        }}
+      />
     </Stack.Navigator>
   );
 }

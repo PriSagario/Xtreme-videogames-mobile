@@ -9,6 +9,11 @@ const gameReducer = (state = initialState, action) => {
                 ...state,
                 dataGamer: action.payload
             }
+        case 'filter':
+            return {
+                ...state,
+                dataGamer: action.payload
+            }
         default:
             return state
     }

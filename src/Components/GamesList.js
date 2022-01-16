@@ -1,12 +1,20 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, Image, Dimensions } from 'react-native'
+import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity } from 'react-native'
+import { useNavigation } from "@react-navigation/native"
 const { width, height } = Dimensions.get('screen')
 
 const GamesList = ({ item }) => {
     const [data,setData] = useState(item)
-    
+    const navigation = useNavigation();
+ 
+    const handleGameDetail = (idGame) => {
+        navigation.navigate("game-detail", { idGame: idGame })
+    }    
     return (
         <View style={styles.container}>
+         <TouchableOpacity
+            onPress = {() => handleGameDetail(data._id) }         
+         >
            <View style={styles.viewContainer}>
                <View style={styles.viewImg}>
                     <Image
@@ -23,6 +31,7 @@ const GamesList = ({ item }) => {
                    </Text>
                </View>
            </View>
+         </TouchableOpacity>
         </View>
     )
 }

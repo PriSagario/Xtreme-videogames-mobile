@@ -21,14 +21,15 @@ import gameActions from '../../Redux/Actions/gameActions';
         .catch((err) => console.log(err));
     }, [])
 
-    const handlePress = () => {
-        navigation.navigate("search")
+    const handlePress = (allGames) => {
+        navigation.navigate("search", { dataGames: allGames })
     } 
+    // console.log(allGames)
     return (
         <ScrollView>
             <View style={styles.container}>
                 <TouchableOpacity
-                    onPress={() => handlePress()}
+                    onPress={() => handlePress(allGames)}
                 >
                     <View style={styles.viewSearch}>
                         <View style={styles.search}>
@@ -40,7 +41,11 @@ import gameActions from '../../Redux/Actions/gameActions';
                 <HorizontalList data={ data }/>
                 <Text style={styles.textTop}>Top games</Text>
                 {allGames &&
-                    allGames.map((item, i) => <HorizontalGames key={i} item={ item }/>)
+                    allGames.map((item, i) => {
+                        if(item.rating_top === 1 ){
+                        return <HorizontalGames key={i} item={ item }/>
+                        }    
+                    })
                 }
              </View>
         </ScrollView>
@@ -56,6 +61,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#20222B',
         paddingTop: height/30,
+        height: height
     },
     text: {
         color: '#fff'
@@ -93,10 +99,11 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     textTop: {
-        fontSize: 20,
+        fontSize: 25,
         color: '#fff',
-        marginTop: height/35,
-        marginLeft: width/10
+        marginTop: height/55,
+        marginLeft: width/10,
+        marginBottom: height/20,
      },
 })
 
