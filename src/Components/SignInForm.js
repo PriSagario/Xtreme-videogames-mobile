@@ -34,6 +34,7 @@ const SignInForm = (props) => {
           setloading(false);
           setpassword('')
           setemail('')
+          navigation.navigate("register")
         }
       }
     };

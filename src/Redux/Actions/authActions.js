@@ -36,8 +36,10 @@ const authActions = {
               
                 if(res.data.success && !res.data.error){
                     // localStorage.setItem('token', res.data.response.token)
-                    dispatch({type:'oneUser', payload:{name: res.data.response.userExists?.firstName, 
-                                                       photo: res.data.response.userExists?.imagen,
+                    dispatch({type:'oneUser', payload:{name: res.data.response.userExists?.firstName,
+                                                       lastname: res.data.response.userExists?.lastName, 
+                                                       mail: res.data.response.userExists?.mail,
+                                                       photo: res.data.response.userExists?.image,
                                                        google: res.data.response.userExists?.google,
                                                        id: res.data.response.userExists?._id}})
                 }else{

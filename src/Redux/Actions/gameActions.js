@@ -2,6 +2,13 @@ import  axios from 'axios';
 
 
 const gameActions = {
+    getGame: (id) => {
+        return async (dispatch, getState) => {
+            const res = await axios.get('http://192.168.43.143:4000/api/game/'+id)
+            // console.log('desde actions:', res.data) 
+            return {success:true , error:null, response: res.data}
+        }
+    },
     getAllGames: () =>{
         return async (dispatch, getState) => {
             const res = await axios.get('http://192.168.43.143:4000/api/allgames')

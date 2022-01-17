@@ -18,7 +18,7 @@ const HorizontalList = ({ data, getGenre }) => {
         getGenre(item)
         .then((res) => {
             navigation.navigate("games-genre", { item: res.response.data.res, name: item })
-            
+            setloading(false)
           })
           .catch((err) => console.log(err));          
     }
@@ -40,7 +40,7 @@ const HorizontalList = ({ data, getGenre }) => {
                            <Text style={styles.itemText}>{ item }</Text>
                        </TouchableOpacity> 
                     </View>
-                    {/* <Loading isVisible={loading} text="Please wait" /> */}
+                    <Loading isVisible={loading} text="Please wait" />
                 </View>}
             />
 }

@@ -1,10 +1,20 @@
-import React from 'react'
+import { set } from 'lodash'
+import React, { useState } from 'react'
 import { StyleSheet, Text, View, Dimensions, Image } from 'react-native'
 import { Icon } from "react-native-elements"
 
 const { width, height } = Dimensions.get('screen')
 
 const CardCart = () => {
+    const [cantidad, setCantidad] = useState(1)
+    const [total, setTotal] = useState(10)
+
+    const handleMenos = () => {
+        cantidad > 1 && setCantidad(cantidad - 1)
+    }
+    const handleMas = () => {
+        setCantidad(cantidad + 1)
+    }
     return (
         <View style={styles.container}>
             <View style={styles.viewImg}>
@@ -27,9 +37,31 @@ const CardCart = () => {
                 <View style={styles.amountPrice}>
                     <View style={styles.viewAmount}>
                         <View style={styles.viewPrice}>
-                            <Icon type="material-community" name={'minus-circle-outline'} size={34} color={'#2CF4B8'} />
-                            <Text style={styles.textAmount}>1</Text>
-                            <Icon type="material-community" name={'plus-circle-outline'} size={34} color={'#2CF4B8'} />
+                            {
+                                cantidad > 1 ?
+                                <Icon 
+                                    onPress={() => handleMenos()} 
+                                    type="material-community" 
+                                    name={'minus-circle-outline'} 
+                                    size={34} 
+                                    color={'#2CF4B8'} 
+                                /> :
+                                <Icon 
+                                    type="material-community" 
+                                    name={'minus-circle-outline'} 
+                                    size={34} 
+                                    color={'#5b5858'} 
+                                />
+
+                            }
+                            <Text style={styles.textAmount}>{cantidad}</Text>
+                            <Icon 
+                                onPress={() => handleMas()}  
+                                type="material-community" 
+                                name={'plus-circle-outline'} 
+                                size={34} 
+                                color={'#2CF4B8'} 
+                            />
                         </View>
                     </View>
                     <View style={styles.viewAmount}>

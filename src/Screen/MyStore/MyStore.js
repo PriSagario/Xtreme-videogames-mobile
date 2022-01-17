@@ -26,8 +26,8 @@ import gameActions from '../../Redux/Actions/gameActions';
     } 
     // console.log(allGames)
     return (
-        <ScrollView>
-            <View style={styles.container}>
+            <ScrollView>
+        <View style={styles.container}>
                 <TouchableOpacity
                     onPress={() => handlePress(allGames)}
                 >
@@ -40,13 +40,29 @@ import gameActions from '../../Redux/Actions/gameActions';
                 </TouchableOpacity>
                 <HorizontalList data={ data }/>
                 <Text style={styles.textTop}>Top games</Text>
-                {allGames &&
-                    allGames.map((item, i) => {
-                        if(item.rating_top === 1 ){
-                        return <HorizontalGames key={i} item={ item }/>
-                        }    
-                    })
-                }
+                <ScrollView
+                horizontal={true}
+                >
+                    {allGames &&
+                        allGames.map((item, i) => {
+                            if(item.rating_top === 5 ){
+                            return <HorizontalGames key={i} item={ item }/>
+                            }    
+                        })
+                    }
+                </ScrollView>
+                <Text style={styles.textTop}>Top Tree</Text>
+                <ScrollView
+                horizontal={true}
+                >
+                    {allGames &&
+                        allGames.map((item, i) => {
+                            if(item.rating_top === 1 ){
+                            return <HorizontalGames key={i} item={ item }/>
+                            }    
+                        })
+                    }
+                </ScrollView>
              </View>
         </ScrollView>
     )
@@ -61,7 +77,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#20222B',
         paddingTop: height/30,
-        height: height
+        // height: height
     },
     text: {
         color: '#fff'

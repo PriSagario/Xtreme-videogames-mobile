@@ -2,10 +2,12 @@ import React from 'react'
 import { StyleSheet, Text, View, ScrollView, Dimensions, Image } from 'react-native'
 import { Button } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
+import { connect } from 'react-redux'
 const { width, height } = Dimensions.get('screen')
 
-const Profile = () => {
+const Profile = ({ oneUser }) => {
     const navigation = useNavigation();  
+     console.log(oneUser)
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -35,13 +37,20 @@ const Profile = () => {
                 </View>
                 <View style={styles.infoUser}>
                     <Text style={styles.textAccount}>My account</Text>
+                    <Text style={styles.textName}>Name : {oneUser.name} {oneUser.lastname}</Text>
+                    <Text style={styles.textMail}>  Email : {oneUser.mail}</Text>
                 </View>            
             </View>
         </ScrollView>
     )
 }
-
-export default Profile
+const mapStateToProps = (state) =>{
+    // console.log(state)
+        return {
+            oneUser: state.authReducer.oneUser,
+        }
+    }
+export default connect(mapStateToProps, null)(Profile)
 
 const styles = StyleSheet.create({
     container: {
@@ -76,10 +85,11 @@ const styles = StyleSheet.create({
         color: '#2CF4B8',
     },
     textAccount: {
-        fontSize: 18,
+        fontSize: 26,
         color: '#2CF4B8',
         marginTop: height/60,
-        marginLeft: width/20,
+        marginLeft: width/3,
+        marginBottom: height/25,
     },
     viewBtn: {
         width:width,
@@ -97,4 +107,16 @@ const styles = StyleSheet.create({
         borderColor: '#2DF2B8',
         // height: height/18
     },
+    textName: {
+        fontSize: 24,
+        color: '#fff',
+        marginBottom: height/30,
+        marginLeft: width/16,
+    },
+    textMail: {
+        fontSize: 24,
+        color: '#fff',
+        // marginTop: height/60,
+         marginLeft: width/30,
+    }
 })
