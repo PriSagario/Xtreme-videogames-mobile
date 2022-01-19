@@ -1,5 +1,6 @@
 const initialState = {
     dataGamer: [], 
+    totalGamer: []
  }
 
 const gameReducer = (state = initialState, action) => {
@@ -14,6 +15,11 @@ const gameReducer = (state = initialState, action) => {
                 ...state,
                 dataGamer: action.payload
             }
+        case 'gamesCart':
+            return {
+                ...state,
+                totalGamer: action.payload
+            }      
         default:
             return state
     }

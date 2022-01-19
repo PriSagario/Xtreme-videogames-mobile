@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import gameActions from '../../Redux/Actions/gameActions';
 
  const { width, height } = Dimensions.get('screen')
- const data = [ "Action", "Adventure", "RPG", "Shooter", "Indie", "Casual", "Sports", "Racing","Puzzle", "Platformer", "Simulation", "Strategy", "Massively Multiplayer"]
+ const genre = [ "Action", "Adventure", "RPG", "Shooter", "Indie", "Casual", "Sports", "Racing","Puzzle", "Platformer", "Simulation", "Strategy", "Massively Multiplayer"]
  const MyStore = ({getGames }) => {
     const navigation = useNavigation();
     const [allGames, setAllgames] = useState([]) 
@@ -26,8 +26,8 @@ import gameActions from '../../Redux/Actions/gameActions';
     } 
     // console.log(allGames)
     return (
-            <ScrollView>
-        <View style={styles.container}>
+        <ScrollView>
+            <View style={styles.container}>
                 <TouchableOpacity
                     onPress={() => handlePress(allGames)}
                 >
@@ -38,7 +38,7 @@ import gameActions from '../../Redux/Actions/gameActions';
                         </View>
                     </View>
                 </TouchableOpacity>
-                <HorizontalList data={ data }/>
+                <HorizontalList genre={ genre }/>
                 <Text style={styles.textTop}>Top games</Text>
                 <ScrollView
                 horizontal={true}

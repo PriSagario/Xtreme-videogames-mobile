@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-// import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { Icon } from "react-native-elements";
-import StoreStack from './StoreStack' // import StoreStack from './StoreStack';
+import StoreStack from './StoreStack' 
 import MyStoreStack from './MyStoreStack';
 import ProfileStack from './ProfileStack';
 import ShopButton from '../Components/ShopButton';
 import CustomDrawerContent from '../Components/CustomDrawerContent'
+import CartButton  from '../Components/CartButton';
 
 const Tab = createBottomTabNavigator()
 const Drawer = createDrawerNavigator() 
@@ -22,19 +23,18 @@ const TabBar = () => {
         tabBarActiveTintColor: "#2FC4B8",
         tabBarHideOnKeyboard: true,
         tabBarStyle: {
-          // borderTopLeftRadius: 30,
-          // borderTopRightRadius: 30,
           alignItems: "center",
           backgroundColor: "#343744",
           paddingBottom: 3,
+          height: 68
         },
         headerShown: false
       })}
     >
       <Tab.Screen
         component={StoreStack}
-        name="storeStack"
-        options={{ title: "Cart" }}
+        name="store"
+        options={{ title: "Cart", tabBarIcon: () => <CartButton /> }}
       />
       <Tab.Screen
         component={MyStoreStack}
@@ -69,12 +69,22 @@ function mostrarIcono(route, color) {
 
   return (
     
-    <Icon type="material-community" name={iconName} size={34} color={color} />
+    <Icon type="material-community" name={iconName} size={35} color={color} />
   );
 }
 
 export default function AuthenticateRoutes() {
   const [user, setUser]= useState(true)
+
+  useEffect(() => {
+    handleResetStorage()
+  }, [])
+
+
+  const handleResetStorage = async () => {
+      await AsyncStorage.removeItem('games');
+  } 
+
   return (
     <NavigationContainer>
         {user ? <TabBar /> : 

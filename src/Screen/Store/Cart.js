@@ -1,33 +1,38 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, View, ScrollView, Dimensions, Image } from 'react-native'
-import { Button, Icon } from "react-native-elements";
+import { Button } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import CardCart from '../../Components/CardCart';
 import NoCart from '../../Components/NoCart';
+import gameActions from '../../Redux/Actions/gameActions';
+import { connect } from 'react-redux'
 const { width, height } = Dimensions.get('screen')
 
-const Cart = () => {
+const Cart = ({ totalGamer }) => {
+    // const [render, setRender] = useState(true)
     const navigation = useNavigation();
-    const [control, setControl]= useState(false) 
+    
     return (
             <View style={styles.container}>
-                <View style={styles.logedUser}>{
-                    control ?
-                    <NoCart />
-                    : <ScrollView>
-                       <View style={styles.viewContent}><CardCart /></View> 
-                       <View style={styles.viewContent}><CardCart /></View> 
-                       <View style={styles.viewContent}><CardCart /></View> 
-                       <View style={styles.viewContent}><CardCart /></View> 
-                       <View style={styles.viewContent}><CardCart /></View> 
-                      </ScrollView> 
+                <View style={styles.logedUser}>
+                <ScrollView>
+                { totalGamer &&
+                   totalGamer.length != 0 ?
+                    totalGamer.map((elem, i) => {
+                        //  console.log('elem', elem)
+                       return <View style={styles.viewContent} key={i}>
+                            <CardCart  data={elem}/>
+                        </View> 
+                    })
+                     : <NoCart /> 
                 }
+                 </ScrollView> 
                 </View>
                 <View style={styles.infoUser}>
                     <View style={styles.viewBtn}>
                         <View style={styles.viewTotal}>
                             <Text style={styles.textTotal}>Total:</Text>
-                            <Text style={styles.textCurrency}>$00.0</Text>
+                            <Text style={styles.textCurrency}>$ 00.0</Text>
                         </View>
                         <Button
                             title="Checkout now"
@@ -42,8 +47,10 @@ const Cart = () => {
             </View>
     )
 }
-
-export default Cart
+  const mapStateToProps = (state) =>{
+    return { totalGamer: state.gameReducer.totalGamer, }
+}
+export default connect(mapStateToProps, null)(Cart)
 
 const styles = StyleSheet.create({
     container: {

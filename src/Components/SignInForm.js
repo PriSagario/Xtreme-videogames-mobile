@@ -8,7 +8,6 @@ import Loading from "../Components/Loading";
 import authActions from '../Redux/Actions/authActions'
 import { connect } from 'react-redux'
 // import * as GoogleSignIn from 'expo-google-sign-in  ';
-import { ScrollView } from "react-native-gesture-handler";
 const { width, height } = Dimensions.get('screen')
 
 const SignInForm = (props) => {
@@ -162,7 +161,6 @@ const SignInForm = (props) => {
     )
 }
 const mapStateToProps = (state) =>{
-  // console.log(state)
       return {
           oneUser: state.authReducer.oneUser,
       }
@@ -181,7 +179,6 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 50,
         alignItems: "center",
         paddingTop: 20,
-        // height: height-300
       },
       input: {
         width: width-40,

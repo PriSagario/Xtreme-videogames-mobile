@@ -9,22 +9,22 @@ import Loading from "../Components/Loading";
 
 const { width, height } = Dimensions.get('window')
 
-const HorizontalList = ({ data, getGenre }) => {
+const HorizontalList = ({ genre, getGenre, data }) => {
     const [loading, setloading] = useState(false);
     const navigation = useNavigation();
    
     const handlePress = (item) => {
-        setloading(true)
+        // setloading(true)
         getGenre(item)
         .then((res) => {
             navigation.navigate("games-genre", { item: res.response.data.res, name: item })
-            setloading(false)
+            // setloading(false)
           })
           .catch((err) => console.log(err));          
     }
-    
+   
     return <FlatList 
-                data={data}
+                data={genre}
                 keyExtractor={(item) => String(item)}
                 style={styles.horizontalList}
                 horizontal

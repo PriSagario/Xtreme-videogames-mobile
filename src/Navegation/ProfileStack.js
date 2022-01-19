@@ -12,17 +12,29 @@ export default function ProfileStack() {
       <Stack.Screen
         component={Profile}
         name="register"
-        options={{ headerShown: false }}
+        options={{ 
+          headerShown: true, 
+          headerStyle: { backgroundColor: '#343744' },
+          headerTintColor: "#fff",
+        }}
       />
       <Stack.Screen
         component={SingIn}
         name="signin"
-        options={{ headerShown: false }}
+        options={{ 
+          headerShown: true, 
+          headerStyle: { backgroundColor: '#343744' },
+          headerTintColor: "#fff",
+        }}
       />
       <Stack.Screen
         component={SignUp}
         name="signup"
-        options={{ headerShown: false }}
+        options={{ 
+          headerShown: true,
+          headerStyle: { backgroundColor: '#343744' },
+          headerTintColor: "#fff",
+        }}
       />      
     </Stack.Navigator>
   );

@@ -7,7 +7,7 @@ const { width, height } = Dimensions.get('screen')
 
 const Profile = ({ oneUser }) => {
     const navigation = useNavigation();  
-     console.log(oneUser)
+
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -45,7 +45,6 @@ const Profile = ({ oneUser }) => {
     )
 }
 const mapStateToProps = (state) =>{
-    // console.log(state)
         return {
             oneUser: state.authReducer.oneUser,
         }
@@ -59,7 +58,6 @@ const styles = StyleSheet.create({
     },
     logedUser: {
         flex: 1,
-        // justifyContent: 'center',
         alignItems: 'center',
         height: height/2,
         backgroundColor: '#2B2E39',

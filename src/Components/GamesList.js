@@ -9,7 +9,8 @@ const GamesList = ({ item }) => {
  
     const handleGameDetail = (idGame) => {
         navigation.navigate("game-detail", { idGame: idGame })
-    }    
+    }
+
     return (
         <View style={styles.container}>
          <TouchableOpacity
@@ -18,16 +19,16 @@ const GamesList = ({ item }) => {
            <View style={styles.viewContainer}>
                <View style={styles.viewImg}>
                     <Image
-                        source={{uri: data.background_image}}
+                        source={{uri: data && data.background_image}}
                         style={styles.imglogo}
                     />                   
                </View>
                <View style={styles.viewData}>
                    <Text style={styles.textTitle}>
-                      {data.name}
+                      {data && data.name}
                    </Text>
                    <Text style={styles.textPrice}>
-                     Price: {data.price}
+                     Price: {data && data.price}
                    </Text>
                </View>
            </View>

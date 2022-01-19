@@ -5,7 +5,7 @@ import { Icon } from "react-native-elements"
 
 const { width, height } = Dimensions.get('screen')
 
-const CardCart = () => {
+const CardCart = ({ data }) => {
     const [cantidad, setCantidad] = useState(1)
     const [total, setTotal] = useState(10)
 
@@ -15,11 +15,12 @@ const CardCart = () => {
     const handleMas = () => {
         setCantidad(cantidad + 1)
     }
+ 
     return (
         <View style={styles.container}>
             <View style={styles.viewImg}>
               <Image
-                source={require("../../assets/minecraft.png")}
+                source={{uri: data.image}}
                 style={styles.imglogo}
               />
             </View>
@@ -27,7 +28,7 @@ const CardCart = () => {
                 <View style={styles.titleAndDelete}>
                     <View style={styles.viewTitle}>
                         <Text style={styles.textGame}>
-                            Minecraft: Java Edition (PC) Official Website Key GLOBAL
+                            { data.name }
                         </Text>
                     </View>
                     <View style={styles.viewDelete}>
@@ -65,7 +66,7 @@ const CardCart = () => {
                         </View>
                     </View>
                     <View style={styles.viewAmount}>
-                        <Text style={styles.textPrice}>$15.58</Text>
+                        <Text style={styles.textPrice}>$ { data.price }</Text>
                     </View>
                 </View>
             </View>

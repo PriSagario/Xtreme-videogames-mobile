@@ -6,6 +6,10 @@ import EditProduct from '../Screen/MyStore/EditProduct';
 import SearchGame from '../Components/SearchGame';
 import gamesByGenre from "../Components/gamesByGenre";
 import gameDetail from '../Components/gameDetail';
+import SingIn from '../Screen/Acount/SingIn';
+import SignUp from '../Screen/Acount/SignUp';
+import Checkout from '../Components/Checkout';
+import Profile from '../Screen/Profile/Profile';
 
 const Stack = createNativeStackNavigator()
 
@@ -62,6 +66,30 @@ export default function MyStoreStack() {
           title: "Game detail",
         }}
       />
+      <Stack.Screen
+        component={SingIn}
+        name="signin"
+        options={{ headerShown: true }}
+      />
+      <Stack.Screen
+        component={SignUp}
+        name="signup"
+        options={{ headerShown: true }}
+      />  
+      <Stack.Screen
+        component={Checkout}
+        name="checkout"
+        options={{ headerShown: true }}
+      />  
+      <Stack.Screen
+        component={Profile}
+        name="register"
+        options={{ 
+          headerShown: true, 
+          headerStyle: { backgroundColor: '#343744' },
+          headerTintColor: "#fff",
+        }}
+      />                      
     </Stack.Navigator>
   );
 }
