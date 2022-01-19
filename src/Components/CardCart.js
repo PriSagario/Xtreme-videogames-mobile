@@ -1,21 +1,50 @@
-import { set } from 'lodash'
+// import { set } from 'lodash'
 import React, { useState } from 'react'
 import { StyleSheet, Text, View, Dimensions, Image } from 'react-native'
 import { Icon } from "react-native-elements"
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { connect } from 'react-redux'
+import gameActions from '../Redux/Actions/gameActions';
 
 const { width, height } = Dimensions.get('screen')
 
-const CardCart = ({ data }) => {
-    const [cantidad, setCantidad] = useState(1)
-    const [total, setTotal] = useState(10)
+const CardCart = ({ data, uploadStorage, setTotal, total }) => {
+    const [cantidad, setCantidad] = useState(2)
+    const [subTotal, setSubTotal] = useState(0)
 
-    const handleMenos = () => {
-        cantidad > 1 && setCantidad(cantidad - 1)
+    const handleMenos = async (id) => {
+        cantidad > 1 && setCantidad(data.amount - 1)
+        let res = data.subtotal - data.price
+        let res2 = data.amount - 1
+        const result = await AsyncStorage.getItem('games')
+        let games = [];
+        if(result !== null) games = JSON.parse(result)
+        games.forEach(elem => {
+            if(elem.id === id){
+                elem.amount = res2
+                elem.subtotal = res.toPrecision(4)
+            }
+            setTotal(total - elem.subtotal) 
+        });
+        uploadStorage(games)
     }
-    const handleMas = () => {
+
+    const handleMas = async (id) => {
         setCantidad(cantidad + 1)
+        let res = data.price * cantidad
+        const result = await AsyncStorage.getItem('games')
+        let games = [];
+        if(result !== null) games = JSON.parse(result)
+        games.forEach(elem => {
+            if(elem.id === id){
+                elem.amount= cantidad
+                elem.subtotal = res.toPrecision(4)
+            }
+            setTotal(total + elem.subtotal) 
+        });
+        uploadStorage(games)       
     }
- 
+
     return (
         <View style={styles.container}>
             <View style={styles.viewImg}>
@@ -41,7 +70,7 @@ const CardCart = ({ data }) => {
                             {
                                 cantidad > 1 ?
                                 <Icon 
-                                    onPress={() => handleMenos()} 
+                                    onPress={() => handleMenos(data.id)} 
                                     type="material-community" 
                                     name={'minus-circle-outline'} 
                                     size={34} 
@@ -53,11 +82,10 @@ const CardCart = ({ data }) => {
                                     size={34} 
                                     color={'#5b5858'} 
                                 />
-
                             }
-                            <Text style={styles.textAmount}>{cantidad}</Text>
+                            <Text style={styles.textAmount}>{data.amount}</Text>
                             <Icon 
-                                onPress={() => handleMas()}  
+                                onPress={() => handleMas(data.id)}  
                                 type="material-community" 
                                 name={'plus-circle-outline'} 
                                 size={34} 
@@ -66,15 +94,20 @@ const CardCart = ({ data }) => {
                         </View>
                     </View>
                     <View style={styles.viewAmount}>
-                        <Text style={styles.textPrice}>$ { data.price }</Text>
+                        <Text style={styles.textPrice}>$ { data.subtotal }</Text>
                     </View>
                 </View>
             </View>
         </View>
     )
 }
-
-export default CardCart
+const mapDispatchToProps = {
+    uploadStorage: gameActions.uploadAsyncStorage
+  }
+// const mapStateToProps = (state) =>{
+//     return { oneUser: state.authReducer.oneUser, }
+// }
+export default connect(null, mapDispatchToProps)(CardCart)
 
 const styles = StyleSheet.create({
     container: {

@@ -43,7 +43,7 @@ const gameActions = {
     },
     saveAsyncStorage: (key, amountGame, idGame, game) => { 
         return async (dispatch, getState) => {
-            const newData = { id: idGame, amount: amountGame, image: game.background_image, name: game.name, price: game.price }
+            const newData = { id: idGame, amount: amountGame, image: game.background_image, name: game.name, price: game.price, subtotal: game.price }
             const result = await AsyncStorage.getItem(key)
             let games = [];
             if(result !== null) games = JSON.parse(result)
@@ -51,7 +51,7 @@ const gameActions = {
             await AsyncStorage.setItem(key, JSON.stringify(games))
            
             //  await AsyncStorage.removeItem(key);
-            const data = [{ id: idGame, amount: amountGame, image: game.background_image, name: game.name, price: game.price  }]
+            const data = [{ id: idGame, amount: amountGame, image: game.background_image, name: game.name, price: game.price, subtotal: game.price }]
             if(result == null)  await AsyncStorage.setItem(key, JSON.stringify(data)) 
             const res = await AsyncStorage.getItem(key)
             const totalCart = JSON.parse(res)
@@ -69,6 +69,19 @@ const gameActions = {
                 return error
             }
         } 
+    },
+    uploadAsyncStorage: (newData) => {
+        return async (dispatch, getState) => {
+            try{
+                await AsyncStorage.setItem('games', JSON.stringify(newData)) 
+                const res = await AsyncStorage.getItem('games')
+                const dataStorage = JSON.parse(res)
+                // console.log('uploadAsinc-dataStorage', dataStorage);
+                dispatch({type:'gamesCart', payload: dataStorage})               
+            }catch(err){
+                return error
+            }
+        }
     }      
 }
 export default gameActions

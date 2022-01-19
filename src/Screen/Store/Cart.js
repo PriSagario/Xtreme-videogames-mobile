@@ -1,17 +1,24 @@
-import React, { useState } from 'react'
-import { StyleSheet, Text, View, ScrollView, Dimensions, Image } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native'
 import { Button } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import CardCart from '../../Components/CardCart';
 import NoCart from '../../Components/NoCart';
-import gameActions from '../../Redux/Actions/gameActions';
 import { connect } from 'react-redux'
 const { width, height } = Dimensions.get('screen')
 
 const Cart = ({ totalGamer }) => {
-    // const [render, setRender] = useState(true)
+    const [data, setData] = useState(totalGamer)
+    const [total, setTotal] = useState([])
     const navigation = useNavigation();
-    
+
+    useEffect(() => {
+        const newTotal = data.reduce((a, b) => a + (b[data] || 0), 0);
+        console.log(newTotal);
+        
+        // setTotal(newTotal)
+    }, [data])
+
     return (
             <View style={styles.container}>
                 <View style={styles.logedUser}>
@@ -21,7 +28,7 @@ const Cart = ({ totalGamer }) => {
                     totalGamer.map((elem, i) => {
                         //  console.log('elem', elem)
                        return <View style={styles.viewContent} key={i}>
-                            <CardCart  data={elem}/>
+                            <CardCart  data={elem} setTotal={ setTotal }/>
                         </View> 
                     })
                      : <NoCart /> 
@@ -42,7 +49,6 @@ const Cart = ({ totalGamer }) => {
                             titleStyle={{ fontSize: 22 }}
                         />
                      </View>
-
                 </View>            
             </View>
     )

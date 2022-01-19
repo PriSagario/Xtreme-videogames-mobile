@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, ImageBackground, Dimensions, Image, Modal, Pressable } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { connect } from 'react-redux'
-import { Button, Icon } from "react-native-elements";
 import gameActions from '../Redux/Actions/gameActions';
+import { Button, Icon } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 const { width, height } = Dimensions.get('screen')
 
