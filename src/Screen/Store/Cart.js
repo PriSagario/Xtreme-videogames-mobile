@@ -1,24 +1,33 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Dimensions, Modal, Pressable } from 'react-native'
 import { Button } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import CardCart from '../../Components/CardCart';
 import NoCart from '../../Components/NoCart';
+import gameActions from '../../Redux/Actions/gameActions';
 import { connect } from 'react-redux'
 const { width, height } = Dimensions.get('screen')
 
-const Cart = ({ totalGamer }) => {
+const Cart = ({ totalGamer, oneUser, totalBuyGame, totalBuy }) => {
     const [data, setData] = useState(totalGamer)
-    const [total, setTotal] = useState([])
+    const [modalVisible, setModalVisible] = useState(false);
+     const [total, setTotal] = useState(0)
     const navigation = useNavigation();
 
-    useEffect(() => {
-        const newTotal = data.reduce((a, b) => a + (b[data] || 0), 0);
-        console.log(newTotal);
-        
-        // setTotal(newTotal)
-    }, [data])
+    useEffect( async () => {
+        totalBuyGame(totalGamer)
+    }, [])
 
+    const handleRegister = () => {
+        setModalVisible(!modalVisible)
+        navigation.navigate('signin')
+      }
+
+    const handleBuy = () => {
+        (Object.keys(oneUser).length === 0) ? setModalVisible(true) : navigation.navigate('checkout')
+      }
+    //   console.log(totalBuy);
+      
     return (
             <View style={styles.container}>
                 <View style={styles.logedUser}>
@@ -28,7 +37,7 @@ const Cart = ({ totalGamer }) => {
                     totalGamer.map((elem, i) => {
                         //  console.log('elem', elem)
                        return <View style={styles.viewContent} key={i}>
-                            <CardCart  data={elem} setTotal={ setTotal }/>
+                            <CardCart  data={elem} />
                         </View> 
                     })
                      : <NoCart /> 
@@ -39,24 +48,58 @@ const Cart = ({ totalGamer }) => {
                     <View style={styles.viewBtn}>
                         <View style={styles.viewTotal}>
                             <Text style={styles.textTotal}>Total:</Text>
-                            <Text style={styles.textCurrency}>$ 00.0</Text>
+                            <Text style={styles.textCurrency}>$ { totalBuy.toPrecision(4) }</Text>
                         </View>
                         <Button
                             title="Checkout now"
                             containerStyle={styles.btnSign}
                             buttonStyle={{ backgroundColor: '#AF3181' }}
-                            onPress={() => navigation.navigate("signin")}
+                            onPress={() => handleBuy()}
                             titleStyle={{ fontSize: 22 }}
                         />
                      </View>
                 </View>            
+        <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            setModalVisible(!modalVisible);
+            }}
+        >
+            <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                    <Text style={styles.modalText}>Sign-in to continue</Text>
+                    <Button
+                      title="Sign In"
+                      containerStyle={styles.btnentrar}
+                      buttonStyle={{ backgroundColor: "#11EDD5" }}
+                      onPress={() => handleRegister()}
+                      titleStyle={{ fontSize: 22 }}
+                    />
+                    <Pressable
+                      style={[styles.button, styles.buttonClose]}
+                      onPress={() => setModalVisible(!modalVisible)}
+                    >
+                      <Text style={styles.textStyle}>Exit</Text>
+                    </Pressable>
+                </View>
+            </View>
+        </Modal>
+
             </View>
     )
 }
   const mapStateToProps = (state) =>{
-    return { totalGamer: state.gameReducer.totalGamer, }
+    return { totalGamer: state.gameReducer.totalGamer, 
+             totalBuy: state.gameReducer.totalBuy,
+             oneUser: state.authReducer.oneUser, }
 }
-export default connect(mapStateToProps, null)(Cart)
+const mapDispatchToProps = {
+    totalBuyGame: gameActions.totalBuyGame
+  }
+export default connect(mapStateToProps, mapDispatchToProps)(Cart)
 
 const styles = StyleSheet.create({
     container: {
@@ -111,5 +154,46 @@ const styles = StyleSheet.create({
     },
     viewContent: {
         marginBottom: height/105
-    }    
+    },
+    modalView: {
+        marginTop: 550,      
+      //   margin: 10,
+        backgroundColor: '#2B2E39',
+        borderRadius: 20,
+        padding: 15,
+        alignItems: "center",
+        shadowColor: "#2B2E39",
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+      },
+    button: {
+      borderRadius: 20,
+      padding: 10,
+      elevation: 2
+    },
+    buttonOpen: {
+      backgroundColor: "#F194FF",
+    },
+    buttonClose: {
+      backgroundColor: "#2B2E39",
+      marginTop: 40,
+      paddingBottom: 10
+    },
+    textStyle: {
+      color: "white",
+      fontWeight: "bold",
+      textAlign: "center",
+      fontSize: 25
+    },
+    modalText: {
+      marginBottom: 25,
+      textAlign: "center",
+      color: '#fff',
+      fontSize: 25
+    },    
 })

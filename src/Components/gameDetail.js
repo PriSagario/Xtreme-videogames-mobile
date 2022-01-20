@@ -7,7 +7,7 @@ import { Button, Icon } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 const { width, height } = Dimensions.get('screen')
 
-const gameDetail = ({ route, getGame, oneUser, saveStorage }) => {
+const gameDetail = ({ route, getGame, oneUser, saveStorage, totalGamer, totalBuyGame }) => {
     const { idGame } = route.params;
     const [game, setGame] = useState({})
     const [modalVisible, setModalVisible] = useState(false);
@@ -25,6 +25,10 @@ const gameDetail = ({ route, getGame, oneUser, saveStorage }) => {
         handleIdGame(idGame)
     }, [idGame])
 
+    useEffect(() => {
+      (totalGamer.length === 0) && setCtrlBoton(true)
+    }, [])
+
     const handleBuy = () => {
       (Object.keys(oneUser).length === 0) ? setModalVisible(true) : navigation.navigate('checkout')
     }
@@ -37,6 +41,7 @@ const gameDetail = ({ route, getGame, oneUser, saveStorage }) => {
     const handleSaveStorage = () => {
       saveStorage(key, amountGame, idGame, game)
       setCtrlBoton(false)
+      totalBuyGame()
     }
 
     const handleIdGame = async (idGame)  =>  { 
@@ -50,7 +55,7 @@ const gameDetail = ({ route, getGame, oneUser, saveStorage }) => {
           }       
       })
     }
-// console.log(game)
+// console.log('totalGamer desde gameDetail', totalGamer.length)
     return (
        game &&
         <ImageBackground
@@ -135,10 +140,11 @@ const gameDetail = ({ route, getGame, oneUser, saveStorage }) => {
 }
 const mapDispatchToProps = {
     getGame: gameActions.getGame, 
-    saveStorage: gameActions.saveAsyncStorage
+    saveStorage: gameActions.saveAsyncStorage,
+    totalBuyGame: gameActions.totalBuyGame
   }
 const mapStateToProps = (state) =>{
-    return { oneUser: state.authReducer.oneUser, }
+    return { oneUser: state.authReducer.oneUser, totalGamer: state.gameReducer.totalGamer }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(gameDetail)
 

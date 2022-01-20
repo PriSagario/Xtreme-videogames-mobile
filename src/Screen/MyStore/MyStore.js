@@ -38,7 +38,6 @@ import gameActions from '../../Redux/Actions/gameActions';
                         </View>
                     </View>
                 </TouchableOpacity>
-                <HorizontalList genre={ genre }/>
                 <Text style={styles.textTop}>Top games</Text>
                 <ScrollView
                 horizontal={true}
@@ -46,7 +45,7 @@ import gameActions from '../../Redux/Actions/gameActions';
                     {allGames &&
                         allGames.map((item, i) => {
                             if(item.rating_top === 5 ){
-                            return <HorizontalGames key={i} item={ item }/>
+                                return <HorizontalGames key={i} item={ item }/>
                             }    
                         })
                     }
@@ -58,11 +57,13 @@ import gameActions from '../../Redux/Actions/gameActions';
                     {allGames &&
                         allGames.map((item, i) => {
                             if(item.rating_top === 1 ){
-                            return <HorizontalGames key={i} item={ item }/>
+                                return <HorizontalGames key={i} item={ item }/>
                             }    
                         })
                     }
                 </ScrollView>
+                    <HorizontalList genre={ genre }/>
+
              </View>
         </ScrollView>
     )
@@ -76,7 +77,7 @@ export default connect(null, mapDispatchToProps)(MyStore)
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#20222B',
-        paddingTop: height/30,
+        paddingTop: height/50,
         // height: height
     },
     text: {
@@ -117,9 +118,9 @@ const styles = StyleSheet.create({
     textTop: {
         fontSize: 25,
         color: '#fff',
-        marginTop: height/55,
+        marginTop: height/75,
         marginLeft: width/10,
-        marginBottom: height/20,
+        marginBottom: height/40,
      },
 })
 

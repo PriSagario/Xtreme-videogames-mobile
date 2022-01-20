@@ -8,7 +8,7 @@ import gameActions from '../Redux/Actions/gameActions';
 
 const { width, height } = Dimensions.get('screen')
 
-const CardCart = ({ data, uploadStorage, setTotal, total }) => {
+const CardCart = ({ data, uploadStorage, totalBuyGame, totalGamer }) => {
     const [cantidad, setCantidad] = useState(2)
     const [subTotal, setSubTotal] = useState(0)
 
@@ -24,9 +24,10 @@ const CardCart = ({ data, uploadStorage, setTotal, total }) => {
                 elem.amount = res2
                 elem.subtotal = res.toPrecision(4)
             }
-            setTotal(total - elem.subtotal) 
+           
         });
         uploadStorage(games)
+        totalBuyGame(games)
     }
 
     const handleMas = async (id) => {
@@ -40,9 +41,20 @@ const CardCart = ({ data, uploadStorage, setTotal, total }) => {
                 elem.amount= cantidad
                 elem.subtotal = res.toPrecision(4)
             }
-            setTotal(total + elem.subtotal) 
+            
         });
-        uploadStorage(games)       
+        uploadStorage(games) 
+        totalBuyGame(games)      
+    }
+
+    const handleDelete = async (id) => {
+        const result = await AsyncStorage.getItem('games')
+        let games = [];
+        let position
+        if(result !== null) games = JSON.parse(result)
+        let deleteGame = games.filter((item) => item.id !== id);
+        uploadStorage(deleteGame)
+        
     }
 
     return (
@@ -61,7 +73,12 @@ const CardCart = ({ data, uploadStorage, setTotal, total }) => {
                         </Text>
                     </View>
                     <View style={styles.viewDelete}>
-                        <Icon type="material-community" name={'delete-outline'} size={34} color={'#2CF4B8'} />
+                        <Icon 
+                            onPress={() => handleDelete(data.id)} 
+                            type="material-community" 
+                            name={'delete-outline'} 
+                            size={34} color={'#2CF4B8'} 
+                        />
                     </View>
                 </View>
                 <View style={styles.amountPrice}>
@@ -102,11 +119,13 @@ const CardCart = ({ data, uploadStorage, setTotal, total }) => {
     )
 }
 const mapDispatchToProps = {
-    uploadStorage: gameActions.uploadAsyncStorage
+    uploadStorage: gameActions.uploadAsyncStorage,
+    totalBuyGame: gameActions.totalBuyGame
   }
-// const mapStateToProps = (state) =>{
-//     return { oneUser: state.authReducer.oneUser, }
-// }
+const mapStateToProps = (state) =>{
+    return { oneUser: state.authReducer.oneUser,
+             totalGamer: state.gameReducer.totalGamer, }
+}
 export default connect(null, mapDispatchToProps)(CardCart)
 
 const styles = StyleSheet.create({

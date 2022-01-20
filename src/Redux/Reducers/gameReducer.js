@@ -1,6 +1,7 @@
 const initialState = {
     dataGamer: [], 
-    totalGamer: []
+    totalGamer: [],
+    totalBuy: 0
  }
 
 const gameReducer = (state = initialState, action) => {
@@ -20,8 +21,13 @@ const gameReducer = (state = initialState, action) => {
                 ...state,
                 totalGamer: action.payload
             }      
+        case 'totalBuy':
+            return {
+                ...state,
+                totalBuy: action.payload 
+            }  
         default:
             return state
     }
 }
-export default gameReducer
+export default gameReducer 

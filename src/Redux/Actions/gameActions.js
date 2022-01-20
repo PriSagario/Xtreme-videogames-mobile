@@ -82,6 +82,16 @@ const gameActions = {
                 return error
             }
         }
-    }      
+    },
+    totalBuyGame: (data) => {
+        return async (dispatch, getState) => {
+            try{
+                const totalBuy =  await data.map(elem => elem.price * elem.amount).reduce((previousValue, currentValue) => previousValue + currentValue)
+                dispatch({type:'totalBuy', payload: totalBuy})               
+            }catch(err){
+                return err
+            }
+        }
+    },          
 }
 export default gameActions
